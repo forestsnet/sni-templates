@@ -35,6 +35,9 @@
     fetch(link.href, fetchOpts);
   }
 })();
+function getDefaultExportFromCjs(x2) {
+  return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
+}
 var jsxRuntime = { exports: {} };
 var reactJsxRuntime_production_min = {};
 var react = { exports: {} };
@@ -300,6 +303,7 @@ react_production_min.version = "18.3.1";
   react.exports = react_production_min;
 }
 var reactExports = react.exports;
+const React = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
 /**
  * @license React
  * react-jsx-runtime.production.min.js
@@ -7318,6 +7322,11 @@ const LoginModal = ({ onClose }) => {
   const [email, setEmail] = reactExports.useState("");
   const [inviteCode, setInviteCode] = reactExports.useState("");
   const [requestSent, setRequestSent] = reactExports.useState(false);
+  const [error, setError] = reactExports.useState("");
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    setError("Неверный код приглашения или email");
+  };
   const handleRequestSubmit = (e) => {
     e.preventDefault();
     setRequestSent(true);
@@ -7334,7 +7343,8 @@ const LoginModal = ({ onClose }) => {
           /* @__PURE__ */ jsxRuntimeExports.jsx(AlertTriangle, { className: "h-5 w-5 text-yellow-500 mt-0.5 mr-3 flex-shrink-0" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-300 font-['VT323'] text-lg", children: "Доступ только по приглашениям. Это наша маленькая коллекция для избранных." })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "space-y-4", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("form", { className: "space-y-4", onSubmit: handleLoginSubmit, children: [
+          error && /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "p-3 bg-red-900/30 border border-red-500 rounded text-red-400 font-['VT323'] text-lg", children: error }),
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx("label", { htmlFor: "inviteCode", className: "block mb-2 font-['VT323'] text-lg text-gray-300", children: "Инвайт-код:" }),
             /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
@@ -7519,6 +7529,7 @@ const NavLink = ({ href, children }) => {
   );
 };
 const Hero = () => {
+  const [showModal, setShowModal] = React.useState(false);
   return /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "pt-16 pb-24 relative overflow-hidden", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "retro-container", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-3xl mx-auto text-center relative z-10", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("h1", { className: "text-2xl sm:text-3xl md:text-4xl mb-6 leading-tight glow-text", children: [
@@ -7545,7 +7556,14 @@ const Hero = () => {
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-['VT323'] text-xl", children: "Закрытое сообщество" })
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("button", { className: "retro-button text-sm sm:text-base pulse-glow", children: "Запросить приглашение" })
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
+        "button",
+        {
+          className: "retro-button text-sm sm:text-base pulse-glow",
+          onClick: () => setShowModal(true),
+          children: "Запросить приглашение"
+        }
+      )
     ] }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-5xl opacity-15 pointer-events-none", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
       "img",
@@ -7554,7 +7572,22 @@ const Hero = () => {
         alt: "",
         className: "w-full"
       }
-    ) })
+    ) }),
+    showModal && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fixed inset-0 z-50 flex items-center justify-center p-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-black/80 backdrop-blur-sm", onClick: () => setShowModal(false) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-md relative z-10 bg-gray-900 border-2 border-purple-500 shadow-[0_0_20px_rgba(168,85,247,0.4)] rounded-lg p-6 text-center", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-['Press_Start_2P'] text-lg mb-4 text-purple-400", children: "Приглашения временно кончились" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-['VT323'] text-xl text-gray-300 mb-6", children: "Попробуйте позже" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "button",
+          {
+            className: "retro-button",
+            onClick: () => setShowModal(false),
+            children: "Закрыть"
+          }
+        )
+      ] })
+    ] })
   ] });
 };
 const games = [
@@ -7991,7 +8024,6 @@ const Footer = () => {
           /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FooterLink, { href: "#games", children: "Игры" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FooterLink, { href: "#how-it-works", children: "Как это работает" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FooterLink, { href: "#testimonials", children: "Отзывы" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FooterLink, { href: "#", children: "Блог" }) }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("li", { children: /* @__PURE__ */ jsxRuntimeExports.jsx(FooterLink, { href: "#", children: "FAQ" }) })
         ] })
       ] }),
