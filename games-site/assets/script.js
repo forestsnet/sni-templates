@@ -7761,16 +7761,19 @@ const games = [
 const GameShowcase = () => {
   const [searchTerm, setSearchTerm] = reactExports.useState("");
   const [selectedPlatform, setSelectedPlatform] = reactExports.useState("all");
+  const [isLoginOpen, setIsLoginOpen] = reactExports.useState(false);
+  
   const filteredGames = games.filter((game) => {
     const matchesSearch = game.title.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesPlatform = selectedPlatform === "all" || game.platform === selectedPlatform;
     return matchesSearch && matchesPlatform;
   });
+  
   return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { id: "games", className: "py-16 bg-gray-950/80", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "retro-container", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col md:flex-row md:items-end justify-between mb-10", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl sm:text-3xl mb-4 glow-text", children: "Коллекция Игр" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 font-['VT323'] text-xl max-w-lg", children: "Библиотека классических игр для твоих ностальгических путешествий во времени" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 font-['VT323'] text-xl max-w-lg", children: "Библиотека классических игр для твоих ностальгических приключений." })
       ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-6 md:mt-0 flex flex-col sm:flex-row gap-4", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
@@ -7803,11 +7806,20 @@ const GameShowcase = () => {
         )
       ] })
     ] }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6", children: filteredGames.map((game) => /* @__PURE__ */ jsxRuntimeExports.jsx(GameCard, { game }, game.id)) })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6", children: filteredGames.map((game) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+      GameCard, 
+      { 
+        game: game, 
+        onPlayClick: () => setIsLoginOpen(true) 
+      }, 
+      game.id
+    )) }),
+    isLoginOpen && /* @__PURE__ */ jsxRuntimeExports.jsx(LoginModal, { onClose: () => setIsLoginOpen(false) })
   ] }) });
 };
-const GameCard = ({ game }) => {
+const GameCard = ({ game, onPlayClick }) => {
   const [isHovered, setIsHovered] = reactExports.useState(false);
+  
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
@@ -7828,14 +7840,18 @@ const GameCard = ({ game }) => {
           /* @__PURE__ */ jsxRuntimeExports.jsx(File, { className: "h-3 w-3 mr-1" }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "Популярно" })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`, children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: `absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/70 to-transparent p-4 flex flex-col justify-end transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-70"}`, children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("h3", { className: "font-['VT323'] text-xl font-bold mb-1", children: game.title }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-300 text-sm mb-3 line-clamp-2", children: game.description }),
           /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-gray-400 text-xs mb-3", children: game.year }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { className: "retro-button w-full text-xs py-2 flex items-center justify-center", children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { className: "h-4 w-4 mr-2" }),
-            "Играть"
-          ] })
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { 
+            className: "retro-button w-full text-xs py-2 flex items-center justify-center", 
+            onClick: onPlayClick,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(Play, { className: "h-4 w-4 mr-2" }),
+              "Играть"
+            ] 
+          })
         ] })
       ]
     }
